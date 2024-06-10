@@ -44,10 +44,10 @@ void ABPPlanePlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	APlayerController* PlayerController = Cast<APlayerController>(GetController());
-	if (PlayerController)
+	APlayerController* PlayerController = CastChecked<APlayerController>(GetController());
+	if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
 	{
-		EnableInput(PlayerController);
+		Subsystem->AddMappingContext(DefaultMappingContext, 0);
 	}
 }
 
@@ -55,7 +55,7 @@ void ABPPlanePlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent);
+	UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 	EnhancedInputComponent->BindAction(RollAction, ETriggerEvent::Triggered, this, &ABPPlanePlayer::Roll);
 	EnhancedInputComponent->BindAction(PitchAction, ETriggerEvent::Triggered, this, &ABPPlanePlayer::Pitch);
 }
