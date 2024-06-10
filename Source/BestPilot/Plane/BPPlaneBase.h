@@ -26,15 +26,25 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+// Rotation Section
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Stat)
-	TObjectPtr<class UBPPlaneStatComponent> Stat;
+	float CurrentYawSpeed;
+	float CurrentPitchSpeed;
+	float CurrentRollSpeed;
 
-	void ProcessKeyPitch(float value);
-	void ProcessKeyRoll(float value);
+	bool bIntentionalRoll{ false };
+	bool bIntentionalPitch{ false };
+
+	void ProcessKeyPitch(float rate);
+	void ProcessKeyRoll(float rate);
 
 	// 회전값을 계산하는 함수
 	void ProcessPitch(float value); // 좌우 축(Y축)을 기준으로 회전값 계산
-	void ProecessRoll(float value); // 상하 축(X축)을 기준으로 회전값 계산
+	void ProcessRoll(float value); // 상하 축(X축)을 기준으로 회전값 계산
+
+// Stat Section
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Stat)
+	TObjectPtr<class UBPPlaneStatComponent> Stat;
 
 };

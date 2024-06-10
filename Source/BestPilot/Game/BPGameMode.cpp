@@ -5,11 +5,15 @@
 
 ABPGameMode::ABPGameMode()
 {
-    //static ConstructorHelpers::FClassFinder<APawn> DefaultPawnClassRef(TEXT("플레이어 위치"));
-    //if (DefaultPawnClassRef.Class)
-    //    DefaultPawnClass = DefaultPawnClassRef.Class;
-    //
-    //static ConstructorHelpers::FClassFinder<APlayerController> PlayerControllerClassRef(TEXT("컨트롤러 위치"));
-    //if (PlayerControllerClassRef.Class)
-    //    PlayerControllerClass = PlayerControllerClassRef.Class;
+    static ConstructorHelpers::FClassFinder<APawn> DefaultPawnClassRef(TEXT("/Script/BestPilot.BPPlanePlayer"));
+    if (DefaultPawnClassRef.Class)
+    {
+        DefaultPawnClass = DefaultPawnClassRef.Class;
+    }
+    
+    static ConstructorHelpers::FClassFinder<APlayerController> PlayerControllerClassRef(TEXT("/Script/BestPilot.BPPlayerController"));
+    if (PlayerControllerClassRef.Class)
+    {
+        PlayerControllerClass = PlayerControllerClassRef.Class;
+    }
 }

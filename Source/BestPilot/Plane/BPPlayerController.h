@@ -13,5 +13,11 @@ UCLASS()
 class BESTPILOT_API ABPPlayerController : public APlayerController
 {
 	GENERATED_BODY()
+
+public:
+	ABPPlayerController();
+
+protected:
+	virtual void BeginPlay() override;
 	
 };

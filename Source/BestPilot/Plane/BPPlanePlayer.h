@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Plane/BPPlaneBase.h"
+#include "InputActionValue.h"
 #include "BPPlanePlayer.generated.h"
 
 /**
@@ -29,5 +30,19 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UCameraComponent> FollowCamera;
+
+// Input Section
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UInputMappingContext> DefaultMappingContext;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UInputAction> RollAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UInputAction> PitchAction;
+
+	void Roll(const FInputActionValue& Value);
+	void Pitch(const FInputActionValue& Value);
 
 };

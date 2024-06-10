@@ -23,9 +23,13 @@ protected:
 
 public:
 	UPROPERTY(EditAnywhere, Category = "Plane")
-	float Acceleration{ 38.f }; float MaxSpeed{ 4000.f };
+	float Acceleration{ 38.f }; 
+	
+	UPROPERTY(EditAnywhere, Category = "Plane")
+	float MaxSpeed{ 4000.f };
 	UPROPERTY(EditAnywhere, Category = "Plane")
 	float MinSpeed{ 500.f };
+	
 	UPROPERTY(EditAnywhere, Category = "Plane")
 	float CurrentForwardSpeed{ 500.f };
 
@@ -34,7 +38,4 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Plane")
 	float PitchRateMultiplier{ 200.f };
 
-	float CurrentYawSpeed;
-	float CurrentPitchSpeed;
-	float CurrentRollSpeed;
 };
