@@ -23,17 +23,15 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
 // Rotation Section
 protected:
+
 	float CurrentYawSpeed;
 	float CurrentPitchSpeed;
 	float CurrentRollSpeed;
 
-	bool bIntentionalRoll{ false };
-	bool bIntentionalPitch{ false };
+	bool bIntentionalRoll = false;
+	bool bIntentionalPitch = false;
 
 	void ProcessKeyPitch(float rate);
 	void ProcessKeyRoll(float rate);
@@ -41,6 +39,7 @@ protected:
 	// 회전값을 계산하는 함수
 	void ProcessPitch(float value); // 좌우 축(Y축)을 기준으로 회전값 계산
 	void ProcessRoll(float value); // 상하 축(X축)을 기준으로 회전값 계산
+	void ProcessYaw(float value); 
 
 // Stat Section
 protected:

@@ -42,7 +42,11 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UInputAction> PitchAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UInputAction> YawAction;
+
 	void Roll(const FInputActionValue& Value);
 	void Pitch(const FInputActionValue& Value);
+	void Yaw(const FInputActionValue& Value);
 
 };

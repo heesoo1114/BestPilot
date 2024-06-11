@@ -31,11 +31,13 @@ public:
 	float MinSpeed{ 500.f };
 	
 	UPROPERTY(EditAnywhere, Category = "Plane")
-	float CurrentForwardSpeed{ 500.f };
+	float CurrentForwardSpeed{ 1000.f };
 
 	UPROPERTY(EditAnywhere, Category = "Plane")
 	float RollRotateMultiplier{ 200.f };
 	UPROPERTY(EditAnywhere, Category = "Plane")
 	float PitchRateMultiplier{ 200.f };
+	UPROPERTY(EditAnywhere, Category = "Plane")
+	float YawRateMultiplier{ 200.f };
 
 };
