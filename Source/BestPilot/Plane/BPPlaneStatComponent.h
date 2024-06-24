@@ -23,10 +23,10 @@ protected:
 
 public:
 	UPROPERTY(EditAnywhere, Category = "Plane")
-	float Acceleration{ 38.f }; 
+	float Acceleration{ 38.0f }; 
 	
 	UPROPERTY(EditAnywhere, Category = "Plane")
-	float MaxSpeed{ 4000.f };
+	float MaxSpeed{ 5000.f };
 	UPROPERTY(EditAnywhere, Category = "Plane")
 	float MinSpeed{ 500.f };
 	

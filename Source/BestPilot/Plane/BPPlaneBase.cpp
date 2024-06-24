@@ -124,3 +124,17 @@ void ABPPlaneBase::ProcessYaw(float value)
 {
 	CurrentYawSpeed = value * Stat->YawRateMultiplier;
 }
+
+void ABPPlaneBase::ProcessAccel()
+{
+	float addAmount = Stat->CurrentForwardSpeed * 0.01f;
+	Stat->CurrentForwardSpeed = FMath::Clamp(Stat->CurrentForwardSpeed + addAmount, Stat->MinSpeed, Stat->MaxSpeed);
+	// UE_LOG(LogTemp, Log, TEXT("Accel : %f"), addAmount);
+}
+
+void ABPPlaneBase::ProcessDecel()
+{
+	float addAmount = Stat->CurrentForwardSpeed * 0.01f;
+	Stat->CurrentForwardSpeed = FMath::Clamp(Stat->CurrentForwardSpeed - addAmount, Stat->MinSpeed, Stat->MaxSpeed);
+	// UE_LOG(LogTemp, Log, TEXT("Decel : %f"), addAmount);
+}

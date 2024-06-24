@@ -45,8 +45,23 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UInputAction> YawAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UInputAction> AccelAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UInputAction> DecelAction;
+
 	void Roll(const FInputActionValue& Value);
 	void Pitch(const FInputActionValue& Value);
 	void Yaw(const FInputActionValue& Value);
+	
+	void Accel();
+	void Decel();
 
+	void EndAccel();
+	void EndDecel();
+
+private:
+	bool isAccel{ false };
+	bool isDecel{ false };
 };

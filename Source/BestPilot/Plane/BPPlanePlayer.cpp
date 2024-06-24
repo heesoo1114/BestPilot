@@ -44,6 +44,18 @@ ABPPlanePlayer::ABPPlanePlayer()
 	{
 		YawAction = InputActionYawhRef.Object;
 	}
+
+	static ConstructorHelpers::FObjectFinder<UInputAction>InputActionAccelRef(TEXT("/Game/BestPiot/Input/BP_Accel.BP_Accel"));
+	if (nullptr != InputActionAccelRef.Object)
+	{
+		AccelAction = InputActionAccelRef.Object;
+	}
+
+	static ConstructorHelpers::FObjectFinder<UInputAction>InputActionDecelRef(TEXT("/Game/BestPiot/Input/BP_Decel.BP_Decel"));
+	if (nullptr != InputActionDecelRef.Object)
+	{
+		DecelAction = InputActionDecelRef.Object;
+	}
 }
 
 void ABPPlanePlayer::BeginPlay()
@@ -62,9 +74,17 @@ void ABPPlanePlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 	UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent);
+	
+	// Rotation Input
 	EnhancedInputComponent->BindAction(RollAction, ETriggerEvent::Triggered, this, &ABPPlanePlayer::Roll);
 	EnhancedInputComponent->BindAction(PitchAction, ETriggerEvent::Triggered, this, &ABPPlanePlayer::Pitch);
 	EnhancedInputComponent->BindAction(YawAction, ETriggerEvent::Triggered, this, &ABPPlanePlayer::Yaw);
+
+	// Move Input
+	EnhancedInputComponent->BindAction(AccelAction, ETriggerEvent::Triggered, this, &ABPPlanePlayer::Accel);
+	EnhancedInputComponent->BindAction(AccelAction, ETriggerEvent::Completed, this, &ABPPlanePlayer::EndAccel);
+	EnhancedInputComponent->BindAction(DecelAction, ETriggerEvent::Triggered, this, &ABPPlanePlayer::Decel);
+	EnhancedInputComponent->BindAction(DecelAction, ETriggerEvent::Completed, this, &ABPPlanePlayer::EndDecel);
 }
 
 void ABPPlanePlayer::Roll(const FInputActionValue& Value)
@@ -85,4 +105,30 @@ void ABPPlanePlayer::Yaw(const FInputActionValue& Value)
 {
 	float value = Value.Get<float>();
 	ProcessYaw(value);
+}
+
+void ABPPlanePlayer::Accel()
+{
+	if (isDecel) return;
+	
+	ProcessAccel();
+	isAccel = true;
+}
+
+void ABPPlanePlayer::Decel()
+{
+	if (isAccel) return;
+	
+	ProcessDecel();
+	isDecel = true;
+}
+
+void ABPPlanePlayer::EndAccel()
+{
+	isAccel = false;
+}
+
+void ABPPlanePlayer::EndDecel()
+{
+	isDecel = false;
 }

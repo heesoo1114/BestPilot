@@ -41,6 +41,10 @@ protected:
 	void ProcessRoll(float value); // 상하 축(X축)을 기준으로 회전값 계산
 	void ProcessYaw(float value); 
 
+	// 가속
+	void ProcessAccel();
+	void ProcessDecel();
+
 // Stat Section
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Stat)
