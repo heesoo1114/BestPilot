@@ -57,7 +57,8 @@ void ABPPlaneBase::Tick(float DeltaTime)
 	DeltaRotation.Pitch = CurrentPitchSpeed * DeltaTime;
 
 	FRotator NewRotation = GetActorRotation() + DeltaRotation;
-	NewRotation.Pitch = FMath::Clamp(NewRotation.Pitch, -80.0f, 80.0f);
+	NewRotation.Pitch = FMath::Clamp(NewRotation.Pitch, -65.0f, 65.0f);
+	NewRotation.Yaw = FMath::Clamp(NewRotation.Yaw, -180.0f, 180.0f);
 	NewRotation.Roll = FMath::Fmod(NewRotation.Roll, 360.0f);
 
 	SetActorRotation(NewRotation);
@@ -122,7 +123,10 @@ void ABPPlaneBase::ProcessRoll(float value)
 
 void ABPPlaneBase::ProcessYaw(float value)
 {
-	CurrentYawSpeed = value * Stat->YawRateMultiplier;
+	const float TargetYawSpeed = value * Stat->YawRateMultiplier;
+	CurrentYawSpeed = FMath::FInterpTo(CurrentYawSpeed, TargetYawSpeed, GetWorld()->GetDeltaSeconds(), 0.5f);
+
+	// ProcessRoll(value * 0.9f);
 }
 
 void ABPPlaneBase::ProcessAccel()

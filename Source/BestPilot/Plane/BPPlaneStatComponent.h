@@ -38,6 +38,6 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Plane")
 	float PitchRateMultiplier{ 200.f };
 	UPROPERTY(EditAnywhere, Category = "Plane")
-	float YawRateMultiplier{ 200.f };
+	float YawRateMultiplier{ 2000.f };
 
 };
