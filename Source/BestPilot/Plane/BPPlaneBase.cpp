@@ -42,14 +42,6 @@ void ABPPlaneBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	// Calculate Thrust
-	const float CurrentArc = -GetActorRotation().Pitch * DeltaTime * Stat->Acceleration;
-	const float NewForwardSpeed = Stat->CurrentForwardSpeed + CurrentArc;
-	Stat->CurrentForwardSpeed = FMath::Clamp(NewForwardSpeed, Stat->MinSpeed, Stat->MaxSpeed);
-
-	const FVector LocalMove = FVector(Stat->CurrentForwardSpeed * DeltaTime, 0.0f, 0.0f);
-	AddActorLocalOffset(LocalMove, true);
-
 	// Calculate Rotation
 	FRotator DeltaRotation(0, 0, 0);
 	DeltaRotation.Roll = CurrentRollSpeed * DeltaTime;
@@ -58,20 +50,28 @@ void ABPPlaneBase::Tick(float DeltaTime)
 
 	FRotator NewRotation = GetActorRotation() + DeltaRotation;
 	NewRotation.Pitch = FMath::Clamp(NewRotation.Pitch, -65.0f, 65.0f);
-	NewRotation.Yaw = FMath::Clamp(NewRotation.Yaw, -180.0f, 180.0f);
+	// NewRotation.Yaw = FMath::Clamp(NewRotation.Yaw, -180.0f, 180.0f);
 	NewRotation.Roll = FMath::Fmod(NewRotation.Roll, 360.0f);
 
 	SetActorRotation(NewRotation);
 
 	if (false == bIntentionalPitch)
 	{
-		CurrentPitchSpeed = FMath::FInterpTo(CurrentPitchSpeed, 0.0f, DeltaTime, 0.5f);
+		CurrentPitchSpeed = 0.0f;
 	}
 
 	if (false == bIntentionalRoll)
 	{
-		CurrentRollSpeed = FMath::FInterpTo(CurrentRollSpeed, 0.0f, DeltaTime, 0.5f);
+		CurrentRollSpeed = 0.0f;
 	}
+
+	// Calculate Thrust
+	const float CurrentArc = -GetActorRotation().Pitch * DeltaTime * Stat->Acceleration;
+	const float NewForwardSpeed = Stat->CurrentForwardSpeed + CurrentArc;
+	Stat->CurrentForwardSpeed = FMath::Clamp(NewForwardSpeed, Stat->MinSpeed, Stat->MaxSpeed);
+
+	const FVector LocalMove = FVector(Stat->CurrentForwardSpeed * DeltaTime, 0.0f, 0.0f);
+	AddActorLocalOffset(LocalMove, true);
 }
 
 void ABPPlaneBase::ProcessKeyPitch(float rate)
@@ -95,7 +95,7 @@ void ABPPlaneBase::ProcessPitch(float value)
 	bIntentionalPitch = FMath::Abs(value) > 0.0f;
 
 	const float TargetPitchSpeed = value * Stat->PitchRateMultiplier;
-	CurrentPitchSpeed = FMath::FInterpTo(CurrentPitchSpeed, TargetPitchSpeed, GetWorld()->GetDeltaSeconds(), 0.5f);
+	CurrentPitchSpeed = FMath::FInterpTo(CurrentPitchSpeed, TargetPitchSpeed, GetWorld()->GetDeltaSeconds(), 0.75f);
 }
 
 void ABPPlaneBase::ProcessRoll(float value)
@@ -118,15 +118,15 @@ void ABPPlaneBase::ProcessRoll(float value)
 	}
 
 	const float TargetRollSpeed = RollSpeed;
-	CurrentRollSpeed = FMath::FInterpTo(CurrentRollSpeed, TargetRollSpeed, GetWorld()->GetDeltaSeconds(), 0.5f);
+	CurrentRollSpeed = FMath::FInterpTo(CurrentRollSpeed, TargetRollSpeed, GetWorld()->GetDeltaSeconds(), 0.75f);
 }
 
 void ABPPlaneBase::ProcessYaw(float value)
 {
 	const float TargetYawSpeed = value * Stat->YawRateMultiplier;
-	CurrentYawSpeed = FMath::FInterpTo(CurrentYawSpeed, TargetYawSpeed, GetWorld()->GetDeltaSeconds(), 0.5f);
+	CurrentYawSpeed = FMath::FInterpTo(CurrentYawSpeed, TargetYawSpeed, GetWorld()->GetDeltaSeconds(), 0.75f);
 
-	// ProcessRoll(value * 0.9f);
+	ProcessRoll(value * 0.4f);
 }
 
 void ABPPlaneBase::ProcessAccel()
