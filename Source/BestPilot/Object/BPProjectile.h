@@ -20,8 +20,11 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	UPROPERTY(EditDefaultsOnly, Category = "Combat")
-	UStaticMeshComponent* ProjectileMesh;
+	UPROPERTY(EditDefaultsOnly, Category = "Movement")
+	TObjectPtr<class UStaticMeshComponent> ProjectileMesh;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Movement")
+	TObjectPtr<class UProjectileMovementComponent> ProjectileMovementComponent;
 
 public:
 	// Called every frame

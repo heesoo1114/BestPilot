@@ -94,7 +94,7 @@ void ABPPlanePlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	EnhancedInputComponent->BindAction(DecelAction, ETriggerEvent::Completed, this, &ABPPlanePlayer::EndDecel);
 
 	// Combat Input
-	EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Triggered, this, &ABPPlanePlayer::Fire);
+	EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Started, this, &ABPPlanePlayer::Fire);
 }
 
 void ABPPlanePlayer::Roll(const FInputActionValue& Value)
