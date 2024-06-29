@@ -5,6 +5,8 @@
 #include "BPPlaneStatComponent.h"
 #include "Components/BoxComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Particles/ParticleSystem.h"
+#include "Particles/ParticleSystemComponent.h"
 
 // Sets default values
 ABPPlaneBase::ABPPlaneBase()
@@ -51,7 +53,8 @@ void ABPPlaneBase::Tick(float DeltaTime)
 	FRotator NewRotation = GetActorRotation() + DeltaRotation;
 	NewRotation.Pitch = FMath::Clamp(NewRotation.Pitch, -65.0f, 65.0f);
 	// NewRotation.Yaw = FMath::Clamp(NewRotation.Yaw, -180.0f, 180.0f);
-	NewRotation.Roll = FMath::Fmod(NewRotation.Roll, 360.0f);
+	// NewRotation.Roll = FMath::Fmod(NewRotation.Roll, 360.0f);
+	NewRotation.Roll = FMath::Clamp(NewRotation.Roll, -60.0f, 60.0f);
 
 	SetActorRotation(NewRotation);
 
@@ -126,7 +129,7 @@ void ABPPlaneBase::ProcessYaw(float value)
 	const float TargetYawSpeed = value * Stat->YawRateMultiplier;
 	CurrentYawSpeed = FMath::FInterpTo(CurrentYawSpeed, TargetYawSpeed, GetWorld()->GetDeltaSeconds(), 0.75f);
 
-	ProcessRoll(value * 0.4f);
+	ProcessRoll(value);
 }
 
 void ABPPlaneBase::ProcessAccel()

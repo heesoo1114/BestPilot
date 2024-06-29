@@ -26,12 +26,12 @@ public:
 	float Acceleration{ 38.0f }; 
 	
 	UPROPERTY(EditAnywhere, Category = "Plane")
-	float MaxSpeed{ 5000.f };
+	float MaxSpeed{ 6000.f };
 	UPROPERTY(EditAnywhere, Category = "Plane")
-	float MinSpeed{ 500.f };
+	float MinSpeed{ 1000.f };
 	
 	UPROPERTY(EditAnywhere, Category = "Plane")
-	float CurrentForwardSpeed{ 1000.f };
+	float CurrentForwardSpeed{ 2000.f };
 
 	UPROPERTY(EditAnywhere, Category = "Plane")
 	float RollRotateMultiplier{ 200.f };
