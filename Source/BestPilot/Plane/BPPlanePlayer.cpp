@@ -7,6 +7,7 @@
 #include "InputMappingContext.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Object//BPProjectile.h"
 
 ABPPlanePlayer::ABPPlanePlayer()
 {
@@ -56,6 +57,12 @@ ABPPlanePlayer::ABPPlanePlayer()
 	{
 		DecelAction = InputActionDecelRef.Object;
 	}
+
+	static ConstructorHelpers::FObjectFinder<UInputAction>FireActionDecelRef(TEXT("/Game/BestPiot/Input/BP_Fire.BP_Fire"));
+	if (nullptr != FireActionDecelRef.Object)
+	{
+		FireAction = FireActionDecelRef.Object;
+	}
 }
 
 void ABPPlanePlayer::BeginPlay()
@@ -85,6 +92,9 @@ void ABPPlanePlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	EnhancedInputComponent->BindAction(AccelAction, ETriggerEvent::Completed, this, &ABPPlanePlayer::EndAccel);
 	EnhancedInputComponent->BindAction(DecelAction, ETriggerEvent::Triggered, this, &ABPPlanePlayer::Decel);
 	EnhancedInputComponent->BindAction(DecelAction, ETriggerEvent::Completed, this, &ABPPlanePlayer::EndDecel);
+
+	// Combat Input
+	EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Triggered, this, &ABPPlanePlayer::Fire);
 }
 
 void ABPPlanePlayer::Roll(const FInputActionValue& Value)
@@ -131,4 +141,15 @@ void ABPPlanePlayer::EndAccel()
 void ABPPlanePlayer::EndDecel()
 {
 	isDecel = false;
+}
+
+void ABPPlanePlayer::Fire()
+{
+	// Fire Logic
+	FVector Location = SpawnPosition->GetComponentLocation();
+	FRotator Rotation = SpawnPosition->GetComponentRotation();
+
+	GetWorld()->SpawnActor<ABPProjectile>(Projectile, Location, Rotation);
+
+	UE_LOG(LogTemp, Log, TEXT("Spawn"));
 }

@@ -50,4 +50,19 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Stat)
 	TObjectPtr<class UBPPlaneStatComponent> Stat;
 
+// Effect Section
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Effect)
+	TObjectPtr<class UParticleSystemComponent> FireEffectComponent_L;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Effect)
+	TObjectPtr<class UParticleSystemComponent> FireEffectComponent_R;
+
+// Combat Section
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Combat)
+	TObjectPtr<class USceneComponent> SpawnPosition;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Combat)
+	TSubclassOf<class ABPProjectile> Projectile;
 };

@@ -7,6 +7,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Particles/ParticleSystem.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "Object/BPProjectile.h"
 
 // Sets default values
 ABPPlaneBase::ABPPlaneBase()
@@ -31,6 +32,39 @@ ABPPlaneBase::ABPPlaneBase()
 
 	// Stat
 	Stat = CreateDefaultSubobject<UBPPlaneStatComponent>(TEXT("Stat"));
+
+	// Effect
+	static ConstructorHelpers::FObjectFinder<UParticleSystem> EngineEffect(TEXT(
+		"/Game/InfinityBladeEffects/Effects/FX_Mobile/combat/P_MagicSpray_Untyped.P_MagicSpray_Untyped"));
+	if (EngineEffect.Succeeded())
+	{
+		FireEffectComponent_L = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("EngineEffectComponent_L"));
+		FireEffectComponent_R = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("EngineEffectComponent_R"));
+
+		FireEffectComponent_L->SetTemplate(EngineEffect.Object);
+		FireEffectComponent_R->SetTemplate(EngineEffect.Object);
+
+		FireEffectComponent_L->SetupAttachment(GetMesh());
+		FireEffectComponent_R->SetupAttachment(GetMesh());
+
+		FireEffectComponent_L->SetRelativeLocation(FVector(-960.0f, -70.0f, 200.0f));
+		FireEffectComponent_R->SetRelativeLocation(FVector(-960.0f, +70.0f, 200.0f));
+
+		FireEffectComponent_L->SetRelativeRotation(FRotator(180.0f, 0.0f, 0.0f));
+		FireEffectComponent_R->SetRelativeRotation(FRotator(180.0f, 0.0f, 0.0f));
+	}
+
+	// Combat 
+	SpawnPosition = CreateDefaultSubobject<USceneComponent>(TEXT("SpawnPosition"));
+	SpawnPosition->SetupAttachment(GetMesh());
+	SpawnPosition->SetRelativeLocation(FVector(1230.0f, 0.0f, 210.0f));
+
+	static ConstructorHelpers::FClassFinder<ABPProjectile> ProjectileClassRef(TEXT(
+		"/Game/BestPiot/BP_Object/BP_Projectile.BP_Projectile_C"));
+	if (ProjectileClassRef.Class)
+	{
+		Projectile = ProjectileClassRef.Class;
+	}
 }
 
 // Called when the game starts or when spawned
