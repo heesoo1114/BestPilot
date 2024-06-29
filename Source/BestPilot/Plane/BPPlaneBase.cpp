@@ -58,6 +58,7 @@ ABPPlaneBase::ABPPlaneBase()
 	SpawnPosition = CreateDefaultSubobject<USceneComponent>(TEXT("SpawnPosition"));
 	SpawnPosition->SetupAttachment(GetMesh());
 	SpawnPosition->SetRelativeLocation(FVector(1300.0f, -20.0f, 210.0f));
+	SpawnPosition->SetRelativeRotation(FRotator(0.0f, 180.0f, 0.0f));
 
 	static ConstructorHelpers::FClassFinder<ABPProjectile> ProjectileClassRef(TEXT(
 		"/Game/BestPiot/BP_Object/BP_Projectile.BP_Projectile_C"));
