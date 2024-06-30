@@ -4,9 +4,11 @@
 #include "Plane/BPPlaneBase.h"
 #include "BPPlaneStatComponent.h"
 #include "Components/BoxComponent.h"
+#include "Components/AudioComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Particles/ParticleSystem.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "Sound/SoundCue.h"
 #include "Object/BPProjectile.h"
 
 // Sets default values
@@ -66,12 +68,29 @@ ABPPlaneBase::ABPPlaneBase()
 	{
 		Projectile = ProjectileClassRef.Class;
 	}
+
+	// Audio
+	LoopingAudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("LoopingAudioComponent"));
+	LoopingAudioComponent->SetupAttachment(RootComponent);
+
+	static ConstructorHelpers::FObjectFinder<USoundCue> EngineSoundRef(TEXT(
+		"/Game/ProjectileAsset/Audio/737-plane-flight-passenger-cabin-17661_Cue.737-plane-flight-passenger-cabin-17661_Cue"));
+	if (EngineSoundRef.Object)
+	{
+		EngineSound = EngineSoundRef.Object;
+	}
 }
 
 // Called when the game starts or when spawned
 void ABPPlaneBase::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if (EngineSound)
+	{
+		LoopingAudioComponent->SetSound(EngineSound);
+		LoopingAudioComponent->Play();
+	}
 }
 
 // Called every frame

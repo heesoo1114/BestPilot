@@ -65,4 +65,12 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Combat)
 	TSubclassOf<class ABPProjectile> Projectile;
+
+// Audio Section
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Audio")
+	TObjectPtr<class UAudioComponent> LoopingAudioComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Audio")
+	TObjectPtr<class USoundCue> EngineSound;
 };
