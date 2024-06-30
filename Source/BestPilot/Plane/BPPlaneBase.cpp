@@ -18,7 +18,7 @@ ABPPlaneBase::ABPPlaneBase()
 
 	// Collider
 	UBoxComponent* BoxComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxComponent"));
-	BoxComponent->InitBoxExtent(FVector(2000.0f, 500.0f, 500.0f));
+	BoxComponent->InitBoxExtent(FVector(1000.0f, 250.0f, 250.0f));
 	BoxComponent->SetupAttachment(RootComponent);
 
 	// Movement
@@ -30,6 +30,7 @@ ABPPlaneBase::ABPPlaneBase()
 	if (PlaneMeshRef.Object)
 	{
 		GetMesh()->SetSkeletalMesh(PlaneMeshRef.Object);
+		GetMesh()->SetRelativeScale3D(FVector(0.5f, 0.5f, 0.5f)); 
 	}
 
 	// Stat
@@ -54,12 +55,15 @@ ABPPlaneBase::ABPPlaneBase()
 
 		FireEffectComponent_L->SetRelativeRotation(FRotator(180.0f, 0.0f, 0.0f));
 		FireEffectComponent_R->SetRelativeRotation(FRotator(180.0f, 0.0f, 0.0f));
+
+		FireEffectComponent_L->SetRelativeScale3D(FVector(2.0f, 2.0f, 2.0f));
+		FireEffectComponent_R->SetRelativeScale3D(FVector(2.0f, 2.0f, 2.0f));
 	}
 
 	// Combat 
 	SpawnPosition = CreateDefaultSubobject<USceneComponent>(TEXT("SpawnPosition"));
 	SpawnPosition->SetupAttachment(GetMesh());
-	SpawnPosition->SetRelativeLocation(FVector(1300.0f, -20.0f, 210.0f));
+	SpawnPosition->SetRelativeLocation(FVector(1600.0f, -20.0f, 210.0f));
 	SpawnPosition->SetRelativeRotation(FRotator(0.0f, 180.0f, 0.0f));
 
 	static ConstructorHelpers::FClassFinder<ABPProjectile> ProjectileClassRef(TEXT(

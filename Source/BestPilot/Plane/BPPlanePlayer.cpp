@@ -14,7 +14,7 @@ ABPPlanePlayer::ABPPlanePlayer()
 	// Camera
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
-	CameraBoom->SocketOffset = FVector(-2200.0f, 0.0f, 800.0f);
+	CameraBoom->SocketOffset = FVector(-1100.0f, 0.0f, 400.0f);
 	CameraBoom->bUsePawnControlRotation = false;
 
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
